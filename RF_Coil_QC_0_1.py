@@ -71,16 +71,17 @@ root.geometry("800x800")
 
 class main:
     #root path to search for images
-    Quarterly_path = "S:/Radiology-Directorate/IRIS/Non-Ionising/MRI/QA and Calibration/Quarterly QC/SNR QC/Images/PHT_Ambition_X/"
+    Quarterly_path = "S:/"
     class initialise_analysis:    
         
         #Acceptable list of sequence names
-        SNR_sequence_names = ["DelRec - 256 AP"]# "SE_SNR_ND", "SE_SNR_SAG_ND", "SE_SNR_ND", "SE_SNR", "t1_se_tra", "DelRec - 256 AP", "DelRec - SE_SNR"]
+        SNR_sequence_names = ["SE_SNR_ND"]
         #root location to store PNG images e.g. graphs, tables and magnitude images
-        png_archive = "S:/Radiology-Directorate/IRIS/Non-Ionising/MRI/QA and Calibration/Quarterly QC/SNR QC/PNG_images/"
-        scanner_ID_dict = {"45504":"PHT_ElitionX_MR3", "47009": "PHT_Ambition_X", "169672":"PHT_Avanto","169696":"DCH_Avanto_MR1", "183109": "DCH_Sola_MR2", "202541": "RBH_Sola_MR2", "183188": "RBH_Sola_MR3", "64114": "RBH_Essenza_MR3", "169641": "RBH_Avanto_MR1", "41113": "RBH_Aera_MR2", "42044": "PHT_Ingenia3T_MR3", "2016": "AECC_Paramed_MROPEN"}        
+        png_archive = "S:/"
+        #dictionary of form {<scanner ID>: <scanner name>}
+        scanner_ID_dict = {"0000":"My_MRI_Scanner"}        
         coil_dict = {
-            "45504": {
+            "0000": {
                  "Anterior_74":{"n_slices":1, "n_elements":28, "lower_threshold":0.1, "upper_threshold":0.1},
                  "Anterior_79":{"n_slices":1, "n_elements":28, "lower_threshold":0.1, "upper_threshold":0.1}, 
                  #"Breast":{"n_slices":1, "n_elements":15, "lower_threshold":0.01, "upper_threshold":0.1},
@@ -97,185 +98,8 @@ class main:
                  "Shoulder_89":{"n_slices":1, "n_elements":16, "lower_threshold":0.1, "upper_threshold":0.06}, 
                  "Wrist":{"n_slices":1, "n_elements":16, "lower_threshold":0.1, "upper_threshold":0.02},
                  "Head":{"n_slices":1, "n_elements":14, "lower_threshold":0.1, "upper_threshold":0.1},
-                 },            
-            "47009": {
-                 "Anterior171":{"n_slices":1, "n_elements":28, "lower_threshold":0.1, "upper_threshold":0.1},
-                 "Anterior603":{"n_slices":1, "n_elements":28, "lower_threshold":0.1, "upper_threshold":0.1}, 
-                 "Extremity_430":{"n_slices":1, "n_elements":16, "lower_threshold":0.1, "upper_threshold":0.1},
-                 "Foot_Ankle":{"n_slices":1, "n_elements":16, "lower_threshold":0.1, "upper_threshold":0.1},
-                 "Head":{"n_slices":1, "n_elements":15, "lower_threshold":0.1, "upper_threshold":0.1},#"n_elements":16
-                 "Head_Neck_Cor":{"n_slices":1, "n_elements":16, "lower_threshold":0.1, "upper_threshold":0.1}, 
-                 "Head_Neck_Sag":{"n_slices":1, "n_elements":16, "lower_threshold":0.1, "upper_threshold":0.1}, 
-                 "Head_Neck_Tra":{"n_slices":1, "n_elements":16, "lower_threshold":0.1, "upper_threshold":0.25}, 
-                 "Knee_698":{"n_slices":1, "n_elements":16, "lower_threshold":0.1, "upper_threshold":0.1}, 
-                 "Shoulder_126":{"n_slices":1, "n_elements":16, "lower_threshold":0.1, "upper_threshold":0.06}, 
-                 "Spine":{"n_slices":1, "n_elements":12, "lower_threshold":0.1, "upper_threshold":0.2}#"upper_threshold":0.1
-                 },
-            "169672": {
-                 "Body18_33362":{"n_slices":1, "n_elements":18, "lower_threshold":0.1, "upper_threshold":0.075}, 
-                 "Body18_Long_31201":{"n_slices":1, "n_elements":18, "lower_threshold":0.1, "upper_threshold":0.075},
-                 "Bore_Body_Cor":{"n_slices":1, "n_elements":2, "lower_threshold":0.1, "upper_threshold":0.25},
-                 "Bore_Body_Sag":{"n_slices":1, "n_elements":2, "lower_threshold":0.1, "upper_threshold":0.25},
-                 "Bore_Body_Tra":{"n_slices":1, "n_elements":2, "lower_threshold":0.1, "upper_threshold":0.25},
-                 "Breast":{"n_slices":1, "n_elements":18, "lower_threshold":0.1, "upper_threshold":0.045},
-                 "Flex_Large":{"n_slices":1, "n_elements":4, "lower_threshold":0.1, "upper_threshold":0.1},
-                 "Flex_Small":{"n_slices":1, "n_elements":4, "lower_threshold":0.1, "upper_threshold":0.1},
-                 "Foot_Ankle":{"n_slices":1, "n_elements":16, "lower_threshold":0.1, "upper_threshold":0.16}, 
-                 "Hand_Wrist":{"n_slices":1, "n_elements":16, "lower_threshold":0.01, "upper_threshold":0.03}, 
-                 "Head_Neck_Cor":{"n_slices":1, "n_elements":20, "lower_threshold":0.1, "upper_threshold":0.07},
-                 #"Head_Neck_Sag":{"n_slices":1, "n_elements":20, "lower_threshold":0.1, "upper_threshold":0.05}, 
-                 #"Head_Neck_Tra":{"n_slices":1, "n_elements":20, "lower_threshold":0.1, "upper_threshold":0.25},
-                 "Knee":{"n_slices":1, "n_elements":15, "lower_threshold":0.1, "upper_threshold":0.1},
-                 "PA_1_3":{"n_slices":1, "n_elements":18, "lower_threshold":0.1, "upper_threshold":0.05}, 
-                 "PA_4_6":{"n_slices":1, "n_elements":18, "lower_threshold":0.1, "upper_threshold":0.05},
-                 "Shoulder_Large":{"n_slices":1, "n_elements":16, "lower_threshold":0.1, "upper_threshold":0.1},
-                 "Shoulder_Small":{"n_slices":1, "n_elements":16, "lower_threshold":0.1, "upper_threshold":0.1},
-                 "Spine_1_4":{"n_slices":1, "n_elements":16, "lower_threshold":0.1, "upper_threshold":0.25},
-                 "Spine_5_8":{"n_slices":1, "n_elements":16, "lower_threshold":0.1, "upper_threshold":0.25}, 
-                 },
-            "169696": {
-                 "Body_18":{"n_slices":1, "n_elements":18, "lower_threshold":0.015, "upper_threshold":0.055}, 
-                 "Body18_Long":{"n_slices":1, "n_elements":18, "lower_threshold":0.017, "upper_threshold":0.075},
-                 "Body30":{"n_slices":1, "n_elements":30, "lower_threshold":0.1, "upper_threshold":0.075},
-                 "Bore_Body":{"n_slices":1, "n_elements":2, "lower_threshold":0.1, "upper_threshold":0.25},
-                 "Breast":{"n_slices":1, "n_elements":4, "lower_threshold":0.1, "upper_threshold":0.045},
-                 "Flex_Large":{"n_slices":1, "n_elements":4, "lower_threshold":0.1, "upper_threshold":0.1},
-                 "Flex_Small":{"n_slices":1, "n_elements":4, "lower_threshold":0.1, "upper_threshold":0.1},
-                 "Foot_Ankle":{"n_slices":1, "n_elements":16, "lower_threshold":0.01, "upper_threshold":0.14}, 
-                 "Hand_Wrist":{"n_slices":1, "n_elements":16, "lower_threshold":0.01, "upper_threshold":0.03}, 
-                 "Head_Neck_Cor":{"n_slices":1, "n_elements":20, "lower_threshold":0.1, "upper_threshold":0.07},
-                 "Head_Neck_Sag":{"n_slices":1, "n_elements":20, "lower_threshold":0.1, "upper_threshold":0.05}, 
-                 "Head_Neck_Tra":{"n_slices":1, "n_elements":20, "lower_threshold":0.1, "upper_threshold":0.25},
-                 "Knee":{"n_slices":1, "n_elements":15, "lower_threshold":0.1, "upper_threshold":0.1},
-                 "PA_1_3":{"n_slices":1, "n_elements":18, "lower_threshold":0.1, "upper_threshold":0.05}, 
-                 "PA_4_6":{"n_slices":1, "n_elements":18, "lower_threshold":0.1, "upper_threshold":0.05},
-                 "Shoulder_Large":{"n_slices":1, "n_elements":16, "lower_threshold":0.1, "upper_threshold":0.1},
-                 "Shoulder_Small":{"n_slices":1, "n_elements":16, "lower_threshold":0.1, "upper_threshold":0.1},
-                 "Spine_1_4":{"n_slices":1, "n_elements":16, "lower_threshold":0.1, "upper_threshold":0.25},
-                 "Spine_5_8":{"n_slices":1, "n_elements":16, "lower_threshold":0.1, "upper_threshold":0.25}, 
-                 },
-            "183109":{
-                      "Body_31044":{"n_slices":1, "n_elements":18, "lower_threshold":0.1, "upper_threshold":0.1},
-                      "Body_34112":{"n_slices":1, "n_elements":18, "lower_threshold":0.1, "upper_threshold":0.1},
-                      "Bore_Body":{"n_slices":1, "n_elements":2, "lower_threshold":0.1, "upper_threshold":0.25},
-                      "Breast":{"n_slices":1, "n_elements":18, "lower_threshold":0.1, "upper_threshold":0.06},
-                      "Flex_Large":{"n_slices":1, "n_elements":4, "lower_threshold":0.1, "upper_threshold":0.1},
-                      "Flex_Small":{"n_slices":1, "n_elements":4, "lower_threshold":0.1, "upper_threshold":0.1},
-                      "Foot_Ankle":{"n_slices":1, "n_elements":16, "lower_threshold":0.1, "upper_threshold":0.1},
-                      "Head_Neck":{"n_slices":1, "n_elements":20, "lower_threshold":0.1, "upper_threshold":0.055},
-                      "Knee":{"n_slices":1, "n_elements":18, "lower_threshold":0.1, "upper_threshold":0.1},
-                      "PA_1-3":{"n_slices":1, "n_elements":18, "lower_threshold":0.1, "upper_threshold":0.04},
-                      "PA_4-6":{"n_slices":1, "n_elements":18, "lower_threshold":0.1, "upper_threshold":0.04},
-                      "Shoulder":{"n_slices":1, "n_elements":16, "lower_threshold":0.1, "upper_threshold":0.1},
-                      "Spine_1-4":{"n_slices":1, "n_elements":16, "lower_threshold":0.1, "upper_threshold":0.25},
-                      "Spine_5-8":{"n_slices":1, "n_elements":16, "lower_threshold":0.1, "upper_threshold":0.25},
-                      "Wrist":{"n_slices":1, "n_elements":16, "lower_threshold":0.01, "upper_threshold":0.04}},
-            "183188":{
-                    "Body_31117":{"n_slices":1, "n_elements":18, "lower_threshold":0.1, "upper_threshold":0.1},
-                    "Body_34437":{"n_slices":1, "n_elements":18, "lower_threshold":0.1, "upper_threshold":0.1},
-                    "Bore_Body_Cor":{"n_slices":1, "n_elements":2, "lower_threshold":0.1, "upper_threshold":0.25},
-                    "Bore_Body_Sag":{"n_slices":1, "n_elements":2, "lower_threshold":0.1, "upper_threshold":0.25},
-                    "Bore_Body_Tra":{"n_slices":1, "n_elements":2, "lower_threshold":0.1, "upper_threshold":0.25},
-                    "Flex_Large":{"n_slices":1, "n_elements":4, "lower_threshold":0.1, "upper_threshold":0.1},
-                    "Flex_Small":{"n_slices":1, "n_elements":4, "lower_threshold":0.1, "upper_threshold":0.1},
-                    "Foot_Ankle":{"n_slices":1, "n_elements":16, "lower_threshold":0.1, "upper_threshold":0.1},
-                    "Head_Neck_COR":{"n_slices":1, "n_elements":20, "lower_threshold":0.1, "upper_threshold":0.055},
-                    "Head_Neck_SAG":{"n_slices":1, "n_elements":20, "lower_threshold":0.1, "upper_threshold":0.05},
-                    "Head_Neck_TRA":{"n_slices":1, "n_elements":20, "lower_threshold":0.1, "upper_threshold":0.25},
-                    "Knee":{"n_slices":1, "n_elements":18, "lower_threshold":0.1, "upper_threshold":0.1},
-                    "PA_1-3":{"n_slices":1, "n_elements":18, "lower_threshold":0.1, "upper_threshold":0.05},
-                    "PA_4-6":{"n_slices":1, "n_elements":18, "lower_threshold":0.1, "upper_threshold":0.05},
-                    "Shoulder":{"n_slices":1, "n_elements":16, "lower_threshold":0.1, "upper_threshold":0.1},
-                    "Spine_1-4":{"n_slices":1, "n_elements":16, "lower_threshold":0.1, "upper_threshold":0.25},
-                    "Spine_5-8":{"n_slices":1, "n_elements":16, "lower_threshold":0.1, "upper_threshold":0.25},
-                    "Wrist":{"n_slices":1, "n_elements":16, "n_elements":16, "lower_threshold":0.01, "upper_threshold":0.04}},
-            "202541":{
-                    "Body_18_34823":{"n_slices":1, "n_elements":18, "lower_threshold":0.1, "upper_threshold":0.1},
-                    "Body_18_Long_31212":{"n_slices":1, "n_elements":18, "lower_threshold":0.1, "upper_threshold":0.1},
-                    "Bore_Body_Cor":{"n_slices":1, "n_elements":2, "lower_threshold":0.1, "upper_threshold":0.25},
-                    "Bore_Body_Sag":{"n_slices":1, "n_elements":2, "lower_threshold":0.1, "upper_threshold":0.25},
-                    "Bore_Body_Tra":{"n_slices":1, "n_elements":2, "lower_threshold":0.1, "upper_threshold":0.25},
-                    "Flex_Large":{"n_slices":1, "n_elements":4, "lower_threshold":0.1, "upper_threshold":0.1},
-                    "Flex_Small":{"n_slices":1, "n_elements":4, "lower_threshold":0.1, "upper_threshold":0.1},
-                    "Foot_Ankle":{"n_slices":1, "n_elements":16, "lower_threshold":0.1, "upper_threshold":0.1},
-                    "Hand_Wrist":{"n_slices":1, "n_elements":16, "n_elements":16, "lower_threshold":0.01, "upper_threshold":0.04},
-                    "Head_Neck":{"n_slices":1, "n_elements":20, "lower_threshold":0.1, "upper_threshold":0.055},
-                    "Knee":{"n_slices":1, "n_elements":18, "lower_threshold":0.1, "upper_threshold":0.1},
-                    "PA_1-3":{"n_slices":1, "n_elements":18, "lower_threshold":0.1, "upper_threshold":0.05},
-                    "PA_4-6":{"n_slices":1, "n_elements":18, "lower_threshold":0.1, "upper_threshold":0.05},
-                    "Shoulder":{"n_slices":1, "n_elements":16, "lower_threshold":0.1, "upper_threshold":0.1},
-                    "Spine_1-4":{"n_slices":1, "n_elements":16, "lower_threshold":0.1, "upper_threshold":0.2},
-                    "Spine_5-8":{"n_slices":1, "n_elements":16, "lower_threshold":0.1, "upper_threshold":0.2}},
-             "169641": {
-                 "Body18_3198":{"n_slices":1, "n_elements":18, "lower_threshold":0.1, "upper_threshold":0.075}, 
-                 "Body18_Long_30223":{"n_slices":1, "n_elements":18, "lower_threshold":0.1, "upper_threshold":0.075},
-                 "Bore_Body_COR":{"n_slices":1, "n_elements":2, "lower_threshold":0.1, "upper_threshold":0.25},
-                 "Bore_Body_SAG":{"n_slices":1, "n_elements":2, "lower_threshold":0.1, "upper_threshold":0.25},
-                 "Bore_Body_TRA":{"n_slices":1, "n_elements":2, "lower_threshold":0.1, "upper_threshold":0.25},
-                 "Flex_Large":{"n_slices":1, "n_elements":4, "lower_threshold":0.1, "upper_threshold":0.1},
-                 "Flex_Small":{"n_slices":1, "n_elements":4, "lower_threshold":0.1, "upper_threshold":0.1},
-                 "Foot_Ankle":{"n_slices":1, "n_elements":16, "lower_threshold":0.1, "upper_threshold":0.1}, 
-                 "Hand_Wrist":{"n_slices":1, "n_elements":16, "lower_threshold":0.01, "upper_threshold":0.04}, 
-                 "Head_Neck_Cor":{"n_slices":1, "n_elements":20, "lower_threshold":0.1, "upper_threshold":0.06},
-                 "Head_Neck_Sag":{"n_slices":1, "n_elements":20, "lower_threshold":0.1, "upper_threshold":0.05}, 
-                 "Head_Neck_Tra":{"n_slices":1, "n_elements":20, "lower_threshold":0.1, "upper_threshold":0.25},
-                 "Knee":{"n_slices":1, "n_elements":15, "lower_threshold":0.1, "upper_threshold":0.1},
-                 "PA_1_3":{"n_slices":1, "n_elements":18, "lower_threshold":0.1, "upper_threshold":0.05}, 
-                 "PA_4_6":{"n_slices":1, "n_elements":18, "lower_threshold":0.1, "upper_threshold":0.05},
-                 "Shoulder_Large":{"n_slices":1, "n_elements":16, "lower_threshold":0.1, "upper_threshold":0.1},
-                 "Shoulder_Small":{"n_slices":1, "n_elements":16, "lower_threshold":0.1, "upper_threshold":0.1},
-                 "Spine_1_4":{"n_slices":1, "n_elements":16, "lower_threshold":0.1, "upper_threshold":0.25},
-                 "Spine_5_8":{"n_slices":1, "n_elements":16, "lower_threshold":0.1, "upper_threshold":0.25},                 
-                 }, 
-             "41113": {
-                 "Neck":{"n_slices":1, "n_elements":1}, 
-                 "Shoulder_Large":{"n_slices":1, "n_elements":16}, 
-                 "Shoulder_Small":{"n_slices":1, "n_elements":16},
-                 "Foot_Ankle":{"n_slices":2, "n_elements":16}, 
-                 "Hand_Wrist":{"n_slices":3, "n_elements":16}, 
-                 "Knee":{"n_slices":1, "n_elements":15}, 
-                 "Spine_1_4":{"n_slices":3, "n_elements":16},
-                 "Spine_5_8":{"n_slices":3, "n_elements":16}, 
-                 "PA_1_3":{"n_slices":3, "n_elements":18}, 
-                 "PA_4_6":{"n_slices":3, "n_elements":18}, 
-                 "Flex_Large":{"n_slices":1, "n_elements":4}, 
-                 "Flex_Small":{"n_slices":1, "n_elements":4}, 
-                 "Body18_30058":{"n_slices":3, "n_elements":18}, 
-                 "Body18_32681":{"n_slices":3, "n_elements":18}
-                 },
-             "42044": {
-                 "Anterior0232":{"n_slices":4, "n_elements":27}, 
-                 "Anterior6039":{"n_slices":4, "n_elements":27},  
-                 "Foot_Ankle":{"n_slices":2, "n_elements":8}, 
-                 "Head_Neck":{"n_slices":1, "n_elements":15}, 
-                 "Knee":{"n_slices":1, "n_elements":16}, 
-                 "Posterior":{"n_slices":4, "n_elements":12}, 
-                 "Shoulder":{"n_slices":1, "n_elements":1}, 
-                 "Small_Extremeties":{"n_slices":1, "n_elements":16}, 
-                 "Wrist":{"n_slices":1, "n_elements":8}, 
-                 },
-             "64114": {
-                 "Body_MATRIX":{"n_slices":1, "n_elements":1}, 
-                 "Extremity":{"n_slices":1, "n_elements":1}, 
-                 "Flex_Large":{"n_slices":1, "n_elements":1}, 
-                 "Flex_Small":{"n_slices":1, "n_elements":1}, 
-                 "Foot_Ankle":{"n_slices":1, "n_elements":1}, 
-                 "Head":{"n_slices":1, "n_elements":1}, 
-                 "Neck":{"n_slices":1, "n_elements":1}, 
-                 "Shoulder_Large":{"n_slices":1, "n_elements":1}, 
-                 "Shoulder_Small":{"n_slices":1, "n_elements":1}, 
-                 "Spine":{"n_slices":1, "n_elements":1}, 
-                 "Wrist":{"n_slices":1, "n_elements":1}
-                 },
-
-             "2016":{ 
-                 "C-SPINE":{"n_slices":1, "n_elements":1}, 
-                 "FLAT":{"n_slices":1, "n_elements":1}, 
-                 "KNEE":{"n_slices":1, "n_elements":1}, 
-                 "MP-LOOP":{"n_slices":1, "n_elements":1}, 
-                 "SPINE":{"n_slices":1, "n_elements":1}, 
-                 "WRIST":{"n_slices":1, "n_elements":1}
-                 }
+                 }        
+            
              }
             
         def __init__(self, images_root_dir):
@@ -305,21 +129,7 @@ class main:
                 self.dcm_dict = self.Get_Dicom_Dict(self.dcm_paths)
                 self.Get_Coil_Name(self.dcm_dict)
                 #Sort Dicoms (the sort method varies depending on the scanner)
-                if self.scanner_ID == "183188":
-                    self.sorted_dcm_dict = self.Sort_Dicom_Dict_Siemens_Sola_RBH(self.dcm_dict)
-                if self.scanner_ID == "202541":
-                    self.sorted_dcm_dict = self.Sort_Dicom_Dict_Siemens_Sola_DCH(self.dcm_dict)
-                elif self.scanner_ID == "183109":
-                    self.sorted_dcm_dict = self.Sort_Dicom_Dict_Siemens_Sola_DCH(self.dcm_dict)
-                elif self.scanner_ID == "169641":
-                    self.sorted_dcm_dict = self.Sort_Dicom_Dict_Siemens_Avanto_RBH_PHT(self.dcm_dict)
-                elif self.scanner_ID == "169672":
-                    self.sorted_dcm_dict = self.Sort_Dicom_Dict_Siemens_Avanto_RBH_PHT(self.dcm_dict)
-                elif  self.scanner_ID == "169696":
-                    self.sorted_dcm_dict = self.Sort_Dicom_Dict_Siemens_Avanto_DCH(self.dcm_dict)
-                elif self.scanner_ID == "47009":
-                    self.sorted_dcm_dict = self.Sort_Dicom_Dict_Ambition_X_PHT(self.dcm_dict)
-                elif self.scanner_ID == "45504":
+                if self.scanner_ID == "0000":
                     self.sorted_dcm_dict = self.Sort_Dicom_Dict_Elition_X_PHT(self.dcm_dict)
                
                 #archive DICOMs in a sorted format
@@ -1850,8 +1660,8 @@ class main:
                 -combined: all SNR and uniformity results from the combined elements
                 -combined_group:  For combined image an average of all the results 
         """          
-        results_base_directory = "S:/Radiology-Directorate/IRIS/Non-Ionising/MRI/QA and Calibration/Quarterly QC/SNR QC/Results_Sheets/Moriel"
-        scanner_name_dict = {"45504":"PHT_ElitionX_MR3", "183109": "DCH_Sola_MR2", "202541": "RBH_Sola_MR2", "183188": "RBH_Sola_MR3", "169696": "DCH_Avanto_MR1", "64114": "RBH_Essenza_MR3", "169641": "RBH_Avanto_MR1", "41113": "RBH_Aera_MR2", "47009": "PHT_Ambition_X", "169672":"PHT_Avanto", "42044": "PHT_Ingenia3T_MR3", "2016": "AECC_Paramed_MROPEN"}        
+        results_base_directory = "S:/"
+        scanner_name_dict = {"0000":"My_MRI_Scanner"}        
         
         def __init__(self, SNRs, scanner_ID, coil_name):
             """
